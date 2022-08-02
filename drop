@@ -1,0 +1,56 @@
+$(document).ready(function () {
+    Getcountry();
+    $('#State').attr('disabled', true);
+    $('#City').attr('disabled', true);
+    debugger;
+    $('#ddlCountry').change(function () {
+        $('#State').attr('disabled', false);
+        debugger
+        var id = $(this).val();
+        $('#State').empty();
+        $('#City').empty();
+        $('#State').append('<Option>---Select State---</Option>');
+        $('#City').append('<Option>---Select City---</Option>');
+        $.ajax({
+            url: '/Drop/state?id=' + id,
+            success: function (result) {
+                $.each(result, function (i, data) {
+                    $('#State').append('<Option value='
+                        + data.id + '>' + data.stateName + '</Option>');
+                });
+            }
+        });
+    });
+
+    $('#State').change(function () {
+        $('#City').attr('disabled', false);
+        debugger
+        var id = $(this).val();
+        $('#City').empty();
+        $('#City').append('<Option>---Select City---</Option>');
+        $.ajax({
+            url: '/Drop/city?id=' + id,
+            success: function (result) {
+                $.each(result, function (i, data) {
+                    $('#City').append('<Option value='
+                        + data.id + '>' + data.cityName + '</Option>');
+                });
+            }
+        });
+    });
+
+});
+
+
+function Getcountry() {
+    $.ajax({
+        url: '/Drop/Country',
+        success: function (result) {
+     
+            $.each(result, function (i, data) {
+                $('#ddlCountry').append('<Option value =' + data.id + '>' + data.contryName + '</Option > ');
+
+            });
+        }
+    });
+}
