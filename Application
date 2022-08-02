@@ -1,0 +1,13 @@
+using DropdownApplication.Models;
+using Microsoft.EntityFrameworkCore;
+
+namespace DropdownApplication.Data
+{
+    public class ApplicationDbContext : DbContext
+    {
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
+        public DbSet<Country> Countries { get; set; }
+        public DbSet<State> states { get; set; }
+        public DbSet<City> cities { get; set; }
+    }
+}
