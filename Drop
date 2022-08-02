@@ -1,0 +1,41 @@
+using DropdownApplication.Data;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace DropdownApplication.Controllers
+{
+    public class DropController : Controller
+    {
+        private readonly ApplicationDbContext context;
+
+        public DropController(ApplicationDbContext context)
+        {
+            this.context = context;
+        }
+
+        public IActionResult Index()
+        {        
+
+            return View();
+        }
+        public JsonResult Country()
+        {
+            var res = context.Countries.ToList();
+            return new JsonResult(res);
+        }
+        public JsonResult state(int id)
+        {
+            var st = context.states.Where(e => e.country.ID == id).ToList();
+            return new JsonResult(st);
+        }
+
+        public JsonResult city(int id)
+        {
+            var ct = context.cities.Where(e => e.state.ID == id).ToList();
+            return new JsonResult(ct);
+        }
+    }
+}
